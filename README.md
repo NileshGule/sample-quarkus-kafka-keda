@@ -42,3 +42,13 @@ In case the kafka extension was not specified during the iniital bootstrapping o
 ./mvnw quarkus:add-extension -Dextensions="kafka"
 
 ```
+
+## Run project
+
+### Run application using Quarkus Dev mode
+
+```code
+
+.\mvnw compile quarkus:dev
+
+```
