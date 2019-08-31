@@ -21,7 +21,7 @@
       <h2>Last price</h2>
       <div class="row">
         <p class="col-md-12">
-          The last price is
+          The new price convered into USD is
           <strong><span id="content">N/A</span>&nbsp;&euro;</strong>.
         </p>
       </div>
@@ -31,6 +31,7 @@
   <script>
     var source = new EventSource("/prices/stream");
     source.onmessage = function(event) {
+      //   alert("Received event data: " + event.data);
       document.getElementById("content").innerHTML = event.data;
     };
   </script>

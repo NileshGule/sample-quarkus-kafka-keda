@@ -19,7 +19,8 @@ public class PriceConverter {
     @Outgoing("my-data-stream")
     @Broadcast
     public double process(int priceInUsd) {
-        System.out.println("converting the price ");
+        double convertedPrice = priceInUsd * CONVERSION_RATE;
+        System.out.println("converting the price " + priceInUsd + " converted price : " + convertedPrice);
         return priceInUsd * CONVERSION_RATE;
     }
 
