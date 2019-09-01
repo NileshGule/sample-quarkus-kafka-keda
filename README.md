@@ -52,3 +52,19 @@ In case the kafka extension was not specified during the iniital bootstrapping o
 .\mvnw compile quarkus:dev
 
 ```
+
+### Create native image
+
+```code
+
+.\mnvw package -Pnative
+
+```
+
+### Build native image using docker
+
+```code
+
+docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafka-keda .
+
+```
