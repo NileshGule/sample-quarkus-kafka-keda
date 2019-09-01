@@ -35,7 +35,7 @@ mvn io.quarkus:quarkus-maven-plugin:0.21.1:create
 
 ### Add kafka extension
 
-In case the kafka extension was not specified during the iniital bootstrapping of project, it can be added later.
+In case the kafka extension was not specified during the initial bootstrapping of project, it can be added later.
 
 ```code
 
@@ -66,5 +66,13 @@ In case the kafka extension was not specified during the iniital bootstrapping o
 ```code
 
 docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafka-keda .
+
+```
+
+### Add Kubernetes extension
+
+```code
+
+./mvnw quarkus:add-extension -Dextensions="kubernetes"
 
 ```
