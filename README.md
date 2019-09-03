@@ -76,3 +76,15 @@ docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafk
 ./mvnw quarkus:add-extension -Dextensions="kubernetes"
 
 ```
+
+## Install Kafka cluster on Kubernetes
+
+### Install Strimzi Cluster operator with Helm
+
+```code
+
+helm repo add strimzi https://strimzi.io/charts/
+
+helm install strimzi/strimzi-kafka-operator
+
+```
