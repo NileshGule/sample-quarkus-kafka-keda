@@ -1,8 +1,8 @@
 Param(
     [parameter(Mandatory = $false)]
-    [string]$resourceGroupName = "serverlessRG",
+    [string]$resourceGroupName = "quarkuskedaRG",
     [parameter(Mandatory = $false)]
-    [string]$clusterName = "aksmqCluster"
+    [string]$clusterName = "quarkuskedaCluster"
 )
 
 # Browse AKS dashboard
