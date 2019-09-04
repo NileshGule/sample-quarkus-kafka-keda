@@ -4,13 +4,13 @@ kind: Deployment
 metadata:
   name: quarkus-kafka-keda
   labels:
-    run: rquarkus-kafka-keda
+    run: quarkus-kafka-keda
 
 spec:
   replicas: 1
   selector:
     matchLabels:
-      run: quarkus-kafka-keda
+      app: quarkus-kafka-keda
 
   template:
     metadata:
