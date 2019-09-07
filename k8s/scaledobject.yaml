@@ -1,0 +1,23 @@
+---
+apiVersion: keda.k8s.io/v1alpha1
+kind: ScaledObject
+metadata:
+  name: quarkus-kafka-keda-scaled-object
+  namespace: default
+  labels:
+    deploymentName: quarkus-kafka-keda
+
+spec:
+  scaleTargetRef:
+    deploymentName: quarkus-kafka-keda
+  triggers:
+    - type: kafka
+      metadata:
+        type: kafkaTrigger
+        direction: in
+        name: event
+        topic: prices
+        brokers: my-cluster-kafka-bootstrap:9092
+        consumerGroup: functions
+        dataType: binary
+        lagThreshold: "5"

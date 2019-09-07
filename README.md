@@ -88,3 +88,11 @@ helm repo add strimzi https://strimzi.io/charts/
 helm install strimzi/strimzi-kafka-operator
 
 ```
+
+kubectl exec kafka-client --sh -c 'echo "{\"text\": \"this is not something nice to say\"}" | kafka-console-producer --broker-list my-cluster-kafka-brokers:9092 --topic prices'
+
+kafka-console-producer.sh --broker-list my-cluster-kafka-brokers:9092 --topic prices
+
+kafka-console-producer --broker-list my-cluster-kafka-brokers:9092 --topic prices
+
+kafka-console-consumer --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic prices --from-beginning
