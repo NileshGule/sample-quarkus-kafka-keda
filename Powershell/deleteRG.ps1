@@ -1,6 +1,6 @@
 Param(
     [parameter(Mandatory = $false)]
-    [string]$resourceGroupName = "serverlessRG"
+    [string]$resourceGroupName = "quarkuskedaRG"
 )
 
 # Delete AKS cluster

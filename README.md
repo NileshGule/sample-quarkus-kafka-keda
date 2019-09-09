@@ -111,10 +111,10 @@ kafka-console-consumer --bootstrap-server my-cluster-kafka-bootstrap:9092 --topi
 
 ```code
 
-kubectl port-forward svc/kafka-manager 80:80
+kubectl port-forward svc/kafka-manager 8085:80
 
 kubectl port-forward svc/waxen-robin-prometheus-server 8081:80
 
-kubectl port-forward svc/harping-pig-grafana 8091:80
+kubectl port-forward svc/grafana 8091:80
 
 ```
