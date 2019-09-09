@@ -5,7 +5,7 @@ import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
 
 /**
  * A bean consuming data from the "prices" Kafka topic and applying some
@@ -20,11 +20,20 @@ public class PriceConverter {
     @Incoming("prices")
     @Outgoing("my-data-stream")
     @Broadcast
-    public double process(int priceInUsd) throws InterruptedException {
+//    public double process(int priceInUsd) throws InterruptedException {
+    public double process(int priceInUsd)  {
         double convertedPrice = priceInUsd * CONVERSION_RATE;
-        Thread.sleep(2000);
+//        Thread.sleep(2000);
         System.out.println("converting the price " + priceInUsd + " converted price : " + convertedPrice);
         return priceInUsd * CONVERSION_RATE;
+    }
+
+//    @Incoming("prices")
+//    @Outgoing("my-data-stream")
+//    @Broadcast
+    public void processPrices(List<Integer> pricesInUsd)
+    {
+      pricesInUsd.forEach( price -> process(price));
     }
 
 }
