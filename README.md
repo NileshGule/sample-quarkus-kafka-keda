@@ -85,7 +85,17 @@ docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafk
 
 helm repo add strimzi https://strimzi.io/charts/
 
-helm install strimzi/strimzi-kafka-operator
+helm install `
+--name strimzi-kafka-operator-release `
+strimzi/strimzi-kafka-operator
+
+```
+
+### Delete Strimzi Kafka operator
+
+```code
+
+helm delete strimzi-kafka-operator-release
 
 ```
 
@@ -96,3 +106,15 @@ kafka-console-producer.sh --broker-list my-cluster-kafka-brokers:9092 --topic pr
 kafka-console-producer --broker-list my-cluster-kafka-brokers:9092 --topic prices
 
 kafka-console-consumer --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic prices --from-beginning
+
+### Port forward Kafka-manager service
+
+```code
+
+kubectl port-forward svc/kafka-manager 80:80
+
+kubectl port-forward svc/waxen-robin-prometheus-server 8081:80
+
+kubectl port-forward svc/harping-pig-grafana 8091:80
+
+```
