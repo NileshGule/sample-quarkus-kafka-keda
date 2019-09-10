@@ -20,20 +20,26 @@ public class PriceConverter {
     @Incoming("prices")
     @Outgoing("my-data-stream")
     @Broadcast
-//    public double process(int priceInUsd) throws InterruptedException {
-    public double process(int priceInUsd)  {
+    public double process(int priceInUsd) throws InterruptedException {
+//    public double process(int priceInUsd)  {
         double convertedPrice = priceInUsd * CONVERSION_RATE;
-//        Thread.sleep(2000);
+        Thread.sleep(2000);
         System.out.println("converting the price " + priceInUsd + " converted price : " + convertedPrice);
         return priceInUsd * CONVERSION_RATE;
     }
 
-//    @Incoming("prices")
+    @Incoming("prices")
 //    @Outgoing("my-data-stream")
 //    @Broadcast
-    public void processPrices(List<Integer> pricesInUsd)
-    {
-      pricesInUsd.forEach( price -> process(price));
+    public void processPrices(List<Integer> pricesInUsd) {
+      pricesInUsd.forEach( price -> {
+          try {
+              process(price);
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+      });
     }
+
 
 }
