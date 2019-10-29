@@ -17,7 +17,7 @@ spec:
         direction: in
         name: event
         topic: prices
-        brokers: my-cluster-kafka-bootstrap:9092
-        consumerGroup: functions
+        brokers: cp-kafka-release-headless:9092
+        consumerGroup: demo
         dataType: binary
         lagThreshold: "5"

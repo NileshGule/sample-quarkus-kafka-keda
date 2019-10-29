@@ -11,8 +11,8 @@ import javax.ws.rs.core.Response;
 @Path("/prices")
 public class PriceResource {
 
-    @Inject
-    @Stream("my-data-stream") Publisher<Double> prices;
+//    @Inject
+//    @Stream("my-data-stream") Publisher<Double> prices;
 
     @Inject
     PriceGenerator priceGenerator;
@@ -23,13 +23,13 @@ public class PriceResource {
         return "hello";
     }
 
-    @GET
-    @Path("/stream")
-    @Produces(MediaType.SERVER_SENT_EVENTS)
-    public Publisher<Double> stream() {
-        System.out.println("Returning prices from Price Resource");
-        return prices;
-    }
+//    @GET
+//    @Path("/stream")
+//    @Produces(MediaType.SERVER_SENT_EVENTS)
+//    public Publisher<Double> stream() {
+//        System.out.println("Returning prices from Price Resource");
+//        return prices;
+//    }
 
     @POST
     @Path("/generatePrices")

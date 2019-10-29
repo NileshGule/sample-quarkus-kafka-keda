@@ -20,14 +20,14 @@ public class PriceGenerator {
 
     private Random random = new Random();
 
-    @Outgoing("generated-price")
-    public Flowable<Integer> generate() {
-
-        System.out.println("Generating random number");
-
-        return Flowable.interval(5, TimeUnit.SECONDS).map(tick -> random.nextInt(100));
-
-    }
+//    @Outgoing("generated-price")
+//    public Flowable<Integer> generate() {
+//
+//        System.out.println("Generating random number");
+//
+//        return Flowable.interval(5, TimeUnit.SECONDS).map(tick -> random.nextInt(100));
+//
+//    }
 
     @Outgoing("generated-price1")
     public Flowable<Integer> generate1() {

@@ -80,4 +80,4 @@ helm install kedacore/keda-edge `
     --namespace keda `
     --name keda
 
-Set-Location ~/projects/pd-tech-fest-2019/Powershell
+Set-Location ~/projects/sample-quarkus-kafka-keda/Powershell
