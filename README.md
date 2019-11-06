@@ -69,6 +69,14 @@ docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafk
 
 ```
 
+### Push image to DockerHub
+
+```
+
+docker push nileshgule/quarkus-kafka-keda
+
+```
+
 ### Add Kubernetes extension
 
 ```code
