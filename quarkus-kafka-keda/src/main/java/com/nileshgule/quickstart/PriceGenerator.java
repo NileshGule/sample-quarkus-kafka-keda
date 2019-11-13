@@ -30,14 +30,14 @@ public class PriceGenerator {
 //    }
 
     @Outgoing("generated-price1")
-    public Flowable<Integer> generate1() {
+    public Flowable<String> generate1() {
 
         System.out.println("Generating random number");
 
-        List<Integer> prices = new ArrayList<>();
+        List<String> prices = new ArrayList<>();
 
         for (int i = 0; i < 1000; i++) {
-            prices.add(random.nextInt());
+            prices.add("" + random.nextInt());
         }
 
         return Flowable

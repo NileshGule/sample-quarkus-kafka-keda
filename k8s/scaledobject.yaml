@@ -3,11 +3,15 @@ apiVersion: keda.k8s.io/v1alpha1
 kind: ScaledObject
 metadata:
   name: quarkus-kafka-keda-scaled-object
-  namespace: default
+  namespace: kafka
   labels:
     deploymentName: quarkus-kafka-keda
 
 spec:
+  pollingInterval: 10   # Optional. Default: 30 seconds
+  cooldownPeriod: 30   # Optional. Default: 300 seconds
+  minReplicaCount: 0   # Optional. Default: 0
+  maxReplicaCount: 30  # Optional. Default: 100  
   scaleTargetRef:
     deploymentName: quarkus-kafka-keda
   triggers:
@@ -17,7 +21,7 @@ spec:
         direction: in
         name: event
         topic: prices
-        brokers: cp-kafka-release-headless:9092
+        brokerList: cp-kafka-release-headless.kafka:9092
         consumerGroup: demo
         dataType: binary
         lagThreshold: "5"

@@ -3,6 +3,7 @@ kind: Deployment
 
 metadata:
   name: quarkus-kafka-keda
+  namespace: kafka
   labels:
     run: quarkus-kafka-keda
 
@@ -19,4 +20,5 @@ spec:
     spec:
       containers:
         - name: quarkus-kafka-keda
-          image: nileshgule/quarkus-kafka-keda
+          image: localhost:32000/quarkus-kafka-keda
+          imagePullPolicy: Always

@@ -87,37 +87,56 @@ docker push nileshgule/quarkus-kafka-keda
 
 ## Install Kafka cluster on Kubernetes
 
-### Install Strimzi Cluster operator with Helm
+### Install Confluent Kafka 
 
-```code
+```shell
 
-helm repo add strimzi https://strimzi.io/charts/
+helm repo add confluent https://confluentinc.github.io/cp-helm-charts/
 
-helm install `
---name strimzi-kafka-operator-release `
-strimzi/strimzi-kafka-operator
+helm repo update
 
-```
-
-### Delete Strimzi Kafka operator
-
-```code
-
-helm delete strimzi-kafka-operator-release
+helm install --namespace kafka --name cp-kafka-release --set cp-schema-registry.enabled=false --set cp-kafka-rest.enabled=false --set cp-kafka-connect.enabled=false --set cp-ksql-server.enabled=false --set cp-control-center.enabled=false confluentinc/cp-helm-charts
 
 ```
 
-kubectl exec kafka-client --sh -c 'echo "{\"text\": \"this is not something nice to say\"}" | kafka-console-producer --broker-list my-cluster-kafka-brokers:9092 --topic prices'
+### Useful Kafka commands
 
-kafka-console-producer.sh --broker-list my-cluster-kafka-brokers:9092 --topic prices
+```shell
 
-kafka-console-producer --broker-list my-cluster-kafka-brokers:9092 --topic prices
+#create kafka topic prices with 5 partitions and 3 replication-factor
+kafka-topics --zookeeper cp-kafka-release-cp-zookeeper-headless:2181 --topic prices --create --partitions 5 --replication-factor 3 --if-not-exists
 
-kafka-console-consumer --bootstrap-server my-cluster-kafka-bootstrap:9092 --topic prices --from-beginning
+#check if the number of messages and partitions in the topic
+kafka-run-class kafka.tools.GetOffsetShell --broker-list cp-kafka-release-headless:9092 --topic prices
+
+#put message into the topic
+echo "{\"text\": \"this is not something nice to say\"}" | kafka-console-producer --broker-list cp-kafka-release-headless:9092 --topic prices
+
+#get consumer group offset
+kafka-consumer-groups --bootstrap-server cp-kafka-release-headless:9092 --group demo --describe
+
+#sample output
+TOPIC           PARTITION  CURRENT-OFFSET  LOG-END-OFFSET  LAG             CONSUMER-ID                                     HOST            CLIENT-ID
+prices          2          1489            2401            912             consumer-1-b25a1fde-7fd1-4fc6-b26c-e007a36d7e0e /10.1.11.44     consumer-1
+prices          3          1501            2403            902             consumer-1-cd1368e7-8fbe-4f7b-b684-61c4b067be71 /10.1.11.42     consumer-1
+prices          4          1502            2402            900             consumer-1-d7732da5-469c-44ac-8539-b4ef7ac24b32 /10.1.11.43     consumer-1
+prices          1          1488            2403            915             consumer-1-9af9f3c0-1392-4a26-ad85-37e2bc30ce42 /10.1.11.46     consumer-1
+prices          0          1492            2401            909             consumer-1-6b8bce74-7853-4433-9cf6-966cd49709ab /10.1.11.45     consumer-1
+
+
+
+kafka-console-producer --broker-list cp-kafka-release-headless:9092 --topic prices
+
+kafka-console-producer --broker-list cp-kafka-release-headless:9092 --topic prices
+
+kafka-console-consumer --bootstrap-server cp-kafka-release-headless:9092 --topic prices --from-beginning
+
+
+```
 
 ### Port forward Kafka-manager service
 
-```code
+```shell
 
 kubectl port-forward svc/kafka-manager 8085:80
 

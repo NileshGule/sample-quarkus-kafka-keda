@@ -1,8 +1,10 @@
 ## Stage 1 : build with maven builder image with native capabilities
 FROM quay.io/quarkus/centos-quarkus-maven:19.1.1 AS build
-COPY src /usr/src/app/src
+WORKDIR /usr/src/app
 COPY pom.xml /usr/src/app
+RUN mvn dependency:resolve-plugins dependency:go-offline
 USER root
+COPY src /usr/src/app/src
 RUN chown -R quarkus /usr/src/app
 USER quarkus
 RUN mvn -DskipTests -f /usr/src/app/pom.xml -Pnative clean package

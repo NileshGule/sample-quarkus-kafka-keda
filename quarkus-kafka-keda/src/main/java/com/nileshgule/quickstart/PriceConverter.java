@@ -32,7 +32,8 @@ public class PriceConverter {
 //    }
 
     @Incoming("prices")
-    public void receivingPrices(int priceInUsd){
+    public void receivingPrices(String priceInUsd) throws Exception {
+        Thread.sleep(3000);
         LOGGER.info("Received Message={}", priceInUsd);
     }
 }
