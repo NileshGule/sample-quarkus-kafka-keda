@@ -20,15 +20,6 @@ public class PriceGenerator {
 
     private Random random = new Random();
 
-//    @Outgoing("generated-price")
-//    public Flowable<Integer> generate() {
-//
-//        System.out.println("Generating random number");
-//
-//        return Flowable.interval(5, TimeUnit.SECONDS).map(tick -> random.nextInt(100));
-//
-//    }
-
     @Outgoing("generated-price1")
     public Flowable<String> generate1() {
 
@@ -43,20 +34,6 @@ public class PriceGenerator {
         return Flowable
                 .fromIterable(prices);
     }
-
-//    @Outgoing("processed-b")
-//    public PublisherBuilder<Integer> filter(int countOfMessages) {
-////        return input.filter(item -> item.length() > 4);
-//
-//        System.out.println("Generating random number");
-//
-//        List<Integer> prices = new ArrayList<>();
-//
-//        for (int i = 0; i < countOfMessages; i++) {
-//            prices.add(random.nextInt());
-//        }
-//
-//    }
 
 
 }

@@ -123,6 +123,8 @@ prices          4          1502            2402            900             consu
 prices          1          1488            2403            915             consumer-1-9af9f3c0-1392-4a26-ad85-37e2bc30ce42 /10.1.11.46     consumer-1
 prices          0          1492            2401            909             consumer-1-6b8bce74-7853-4433-9cf6-966cd49709ab /10.1.11.45     consumer-1
 
+#reset the offset, only works if there are no consumers
+kafka-consumer-groups --bootstrap-server cp-kafka-release-headless:9092 --group demo --reset-offsets --to-latest --topic prices --execute
 
 
 kafka-console-producer --broker-list cp-kafka-release-headless:9092 --topic prices
