@@ -21,7 +21,8 @@ spec:
         direction: in
         name: event
         topic: prices
-        brokerList: cp-kafka-release-headless.kafka:9092
+        brokerList: cp-kafka-release-headless.kafka:9092 # from the newer keda master build
+        brokers: cp-kafka-release-headless.kafka:9092
         consumerGroup: demo
         dataType: binary
-        lagThreshold: "5"
+        lagThreshold: "20"
