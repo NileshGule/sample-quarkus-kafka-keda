@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: quarkus-kafka-consumer
+  namespace: kafka
+  labels:
+    app.kubernetes.io: quarkus-kafka-consumer
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app.kubernetes.io: quarkus-kafka-consumer
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io: quarkus-kafka-consumer
+    spec:
+      containers:
+        - name: quarkus-kafka-consumer
+          image: localhost:32000/quarkus-kafka-consumer
+          imagePullPolicy: Always
