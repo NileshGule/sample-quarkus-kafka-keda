@@ -61,20 +61,24 @@ In case the kafka extension was not specified during the initial bootstrapping o
 
 ```
 
-### Build native image using docker
+## Building the consumer docker image
 
-```code
+```shell
+cd quarkus-kafka-keda/consumer
+docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafka-consumer .
 
-docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafka-keda .
-
+# Push to dockerhub or your registry
+docker push nileshgule/quarkus-kafka-consumer
 ```
 
-### Push image to DockerHub
+## Building the producer docker image
 
-```
+```shell
+cd quarkus-kafka-keda/producer
 
-docker push nileshgule/quarkus-kafka-keda
-
+docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-kafka-producer .
+# Push to dockerhub or your registry
+docker push nileshgule/quarkus-kafka-producer
 ```
 
 ### Add Kubernetes extension
