@@ -287,8 +287,43 @@ prices          4          1212            1212            0               -    
 prices          1          1211            1211            0               -               -               -
 ```
 
+###  Cleanup
 
-#### Useful Kafka commands
+* Delete the `ScaledObject` first, otherwise deleting the `keda` namespace will get stuck in `Terminating` state.
+
+```shell script
+$ kubectl delete -f k8s/scaledobject.yaml
+```
+
+* Delete the producer and consumer applications
+
+```shell script
+$ kubectl delete -f producer-deployment.yml 
+deployment.apps "quarkus-kafka-producer" deleted
+$ kubectl delete -f consumer-deployment.yml 
+deployment.apps "quarkus-kafka-consumer" deleted
+```
+
+* Delete Kafka broker
+
+```shell script
+$ helm delete --purge cp-kafka-release
+
+```
+
+* Delete Kafka client
+
+```shell script
+$ kubectl -n kafka delete pod kafka-client
+  pod "kafka-client" deleted
+```
+
+* Delete keda
+
+Follow the instructions [here](https://keda.sh/deploy/).
+
+
+#### Some useful Kafka commands
 
 ```shell script
 # Put message into the topic
