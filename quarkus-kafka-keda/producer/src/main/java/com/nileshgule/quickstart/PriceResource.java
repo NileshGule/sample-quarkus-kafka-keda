@@ -14,14 +14,14 @@ public class PriceResource {
 //    @Inject
 //    @Stream("my-data-stream") Publisher<Double> prices;
 
-    @Inject
-    PriceGenerator priceGenerator;
-
-    @GET
-    @Produces(MediaType.TEXT_PLAIN)
-    public String hello() {
-        return "hello";
-    }
+//    @Inject
+//    PriceGenerator priceGenerator;
+//
+//    @GET
+//    @Produces(MediaType.TEXT_PLAIN)
+//    public String hello() {
+//        return "hello";
+//    }
 
 //    @GET
 //    @Path("/stream")
@@ -31,17 +31,17 @@ public class PriceResource {
 //        return prices;
 //    }
 
-    @POST
-    @Path("/generatePrices")
+//    @POST
+//    @Path("/generatePrices")
 //    public Response generatePrices(@PathParam("countOfMessages") int countOfMessages)
-    public Response generatePrices()
-    {
-        System.out.print("Generating 1000 messages");
-
-        priceGenerator.produce();
-
-        return Response.ok().build();
-    }
+//    public Response generatePrices()
+//    {
+//        System.out.print("Generating 1000 messages");
+//
+//        priceGenerator.produce();
+//
+//        return Response.ok().build();
+//    }
 
 
 }

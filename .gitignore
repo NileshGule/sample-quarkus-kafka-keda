@@ -25,3 +25,14 @@ hs_err_pid*
 codelike.json
 target
 .mvn
+
+# IntelliJ
+.idea
+*.ipr
+*.iml
+*.iws
+
+#Eclipse
+.classpath
+.project
+.settings
