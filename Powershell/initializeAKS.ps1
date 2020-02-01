@@ -31,8 +31,8 @@ az aks create `
     --resource-group=$resourceGroupName `
     --name=$clusterName `
     --node-count=$workerNodeCount `
-    --disable-rbac `
     --output=jsonc
+# --disable-rbac `
 # --kubernetes-version=$kubernetesVersion `
 
 # Get credentials for newly created cluster
@@ -61,9 +61,11 @@ kubectl apply -f .\helm-rbac.yaml
 
 Write-Host "Initializing Helm with Tiller service account" -ForegroundColor Green
 
-helm init --service-account tiller
+#helm initi is no longer required with Helm v3 onwards
+#helm init --service-account tiller
 
-helm repo add kedacore https://kedacore.azureedge.net/helm
+# helm repo add kedacore https://kedacore.azureedge.net/helm
+helm repo add kedacore https://kedacore.github.io/charts
 
 helm repo update
 
@@ -74,10 +76,10 @@ Start-Sleep -Seconds 30
 
 Write-Host "Initializing KEDA on AKS cluster $clusterName" -ForegroundColor Green
 
-helm install kedacore/keda-edge `
-    --devel `
-    --set logLevel=debug `
-    --namespace keda `
-    --name keda
+kubectl create namespace keda
+
+helm install keda `
+    kedacore/keda `
+    --namespace keda
 
 Set-Location ~/projects/sample-quarkus-kafka-keda/Powershell

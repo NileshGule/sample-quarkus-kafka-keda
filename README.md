@@ -1,14 +1,13 @@
 # Using KEDA with Quarkus reactive Kafka messaging application
 
-This project demonstrate using a Quarkus application using a Kafka broker to publish and consume message.  
+This project demonstrate using a Quarkus application using a Kafka broker to publish and consume message.
 Using KEDA to auto scale the application when the consumer is lagging behind.
- 
 
 ## Environment setup
 
 ### Install GraalVM
 
-Install GraalVM from the [Releases](https://github.com/oracle/graal/releases) page.  Use the 19.2.0+ version
+Install GraalVM from the [Releases](https://github.com/oracle/graal/releases) page. Use the 19.2.0+ version
 
 Set `GRAALVM_HOME` environment variable
 
@@ -47,11 +46,9 @@ In case the kafka extension was not specified during the initial bootstrapping o
 
 `./mvn compile quarkus:dev`
 
-
 ### Create native image
 
 `./mvn package -Pnative`
-
 
 ## Build the consumer docker image
 
@@ -73,19 +70,32 @@ $ docker build -f src/main/docker/dockerfile.multistage -t nileshgule/quarkus-ka
 $ docker push nileshgule/quarkus-kafka-producer
 ```
 
+## Install Keda on Kubernetes cluster
+
+Follow the steps mentioned on the Keda installation [page](https://keda.sh/deploy/). The installation of Keda is handled as part of the initialization script. Only if you wish to manually install Keda on the Kubernetes cluster, you can follow these instructions.
+
 ## Install Kafka cluster on Kubernetes
 
-### Install Confluent Kafka 
+### Install Confluent Kafka
 
 ```shell script
 
-$ helm repo add confluent https://confluentinc.github.io/cp-helm-charts/
+helm repo add confluent https://confluentinc.github.io/cp-helm-charts/
 
-$ helm repo update
+helm repo update
 
-$ helm install --namespace kafka --name cp-kafka-release --set cp-schema-registry.enabled=false --set cp-kafka-rest.enabled=false --set cp-kafka-connect.enabled=false --set cp-ksql-server.enabled=false --set cp-control-center.enabled=false confluentinc/cp-helm-charts
+helm install `
+cp-kafka-release `
+--namespace kafka `
+--set cp-schema-registry.enabled=false `
+--set cp-kafka-rest.enabled=false `
+--set cp-kafka-connect.enabled=false `
+--set cp-ksql-server.enabled=false `
+--set cp-control-center.enabled=false `
+confluent/cp-helm-charts
 
 ```
+
 ### Verify that kafka is running
 
 First check that kafka is running.
@@ -102,6 +112,7 @@ cp-kafka-release-cp-zookeeper-1   2/2     Running   0          26s
 cp-kafka-release-cp-zookeeper-2   2/2     Running   0          15s
 
 ```
+
 ### Deploy the kafka client
 
 ```shell script
@@ -150,7 +161,7 @@ prices:1:5
 prices:2:5
 prices:3:5
 prices:4:5
-``` 
+```
 
 In the example above, it means you have 25 messages in the topic `prices`, with 5 messages in each partition.
 
@@ -193,10 +204,10 @@ metadata:
     deploymentName: quarkus-kafka-consumer
 
 spec:
-  pollingInterval: 10   # Optional. Default: 30 seconds
-  cooldownPeriod: 30   # Optional. Default: 300 seconds
-  minReplicaCount: 0   # Optional. Default: 0
-  maxReplicaCount: 5  # Optional. Default: 100
+  pollingInterval: 10 # Optional. Default: 30 seconds
+  cooldownPeriod: 30 # Optional. Default: 300 seconds
+  minReplicaCount: 0 # Optional. Default: 0
+  maxReplicaCount: 5 # Optional. Default: 100
   scaleTargetRef:
     deploymentName: quarkus-kafka-consumer
   triggers:
@@ -215,12 +226,12 @@ spec:
 
 Important bits:
 
- * `lagThreshold` - This is the threshold to determine whether to scale up or down the pods.
- * `brokerList` - The `host:port` of the kafka broker.
- * `topic` - The `topic` where the Kafka scaler will listen to.
- * `consumerGroup` - This is the consumer group belonging to the consumer pods.
+- `lagThreshold` - This is the threshold to determine whether to scale up or down the pods.
+- `brokerList` - The `host:port` of the kafka broker.
+- `topic` - The `topic` where the Kafka scaler will listen to.
+- `consumerGroup` - This is the consumer group belonging to the consumer pods.
 
-You should start to see the consumer pods scaling up.  Something like this
+You should start to see the consumer pods scaling up. Something like this
 
 ```shell script
 $ kubectl -n kafka get pods
@@ -253,7 +264,7 @@ NAME                              REFERENCE                           TARGETS   
 keda-hpa-quarkus-kafka-consumer   Deployment/quarkus-kafka-consumer   18500m/60 (avg)   1         5         2          8m21s
 ```
 
-##  Scale to zero
+## Scale to zero
 
 To scale to zero, simply scale the producer pod to zero.
 
@@ -287,41 +298,40 @@ prices          4          1212            1212            0               -    
 prices          1          1211            1211            0               -               -               -
 ```
 
-###  Cleanup
+### Cleanup
 
-* Delete the `ScaledObject` first, otherwise deleting the `keda` namespace will get stuck in `Terminating` state.
+- Delete the `ScaledObject` first, otherwise deleting the `keda` namespace will get stuck in `Terminating` state.
 
 ```shell script
 $ kubectl delete -f k8s/scaledobject.yaml
 ```
 
-* Delete the producer and consumer applications
+- Delete the producer and consumer applications
 
 ```shell script
-$ kubectl delete -f producer-deployment.yml 
+$ kubectl delete -f producer-deployment.yml
 deployment.apps "quarkus-kafka-producer" deleted
-$ kubectl delete -f consumer-deployment.yml 
+$ kubectl delete -f consumer-deployment.yml
 deployment.apps "quarkus-kafka-consumer" deleted
 ```
 
-* Delete Kafka broker
+- Delete Kafka broker
 
 ```shell script
 $ helm delete --purge cp-kafka-release
 
 ```
 
-* Delete Kafka client
+- Delete Kafka client
 
 ```shell script
 $ kubectl -n kafka delete pod kafka-client
   pod "kafka-client" deleted
 ```
 
-* Delete keda
+- Delete keda
 
 Follow the instructions [here](https://keda.sh/deploy/).
-
 
 #### Some useful Kafka commands
 

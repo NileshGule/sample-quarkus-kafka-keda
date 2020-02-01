@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
         - name: quarkus-kafka-producer
-          image: localhost:32000/quarkus-kafka-producer
+          image: nileshgule/quarkus-kafka-producer
           imagePullPolicy: Always

@@ -17,5 +17,5 @@ spec:
     spec:
       containers:
         - name: quarkus-kafka-consumer
-          image: localhost:32000/quarkus-kafka-consumer
+          image: nileshgule/quarkus-kafka-consumer
           imagePullPolicy: Always
