@@ -8,9 +8,9 @@ Param(
     [parameter(Mandatory = $false)]
     [string]$clusterName = "quarkuskedaCluster",
     [parameter(Mandatory = $false)]
-    [int16]$workerNodeCount = 2,
+    [int16]$workerNodeCount = 3,
     [parameter(Mandatory = $false)]
-    [string]$kubernetesVersion = "1.11.2"
+    [string]$kubernetesVersion = "1.17.0"
 
 )
 
@@ -32,8 +32,9 @@ az aks create `
     --name=$clusterName `
     --node-count=$workerNodeCount `
     --output=jsonc
+# --kubernetes-version=$kubernetesVersion
 # --disable-rbac `
-# --kubernetes-version=$kubernetesVersion `
+
 
 # Get credentials for newly created cluster
 Write-Host "Getting credentials for cluster $clusterName" -ForegroundColor Yellow
@@ -61,7 +62,7 @@ kubectl apply -f .\helm-rbac.yaml
 
 Write-Host "Initializing Helm with Tiller service account" -ForegroundColor Green
 
-#helm initi is no longer required with Helm v3 onwards
+#helm init is no longer required with Helm v3 onwards
 #helm init --service-account tiller
 
 # helm repo add kedacore https://kedacore.azureedge.net/helm

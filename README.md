@@ -80,19 +80,31 @@ Follow the steps mentioned on the Keda installation [page](https://keda.sh/deplo
 
 ```shell script
 
+kubectl create namespace kafka
+
 helm repo add confluent https://confluentinc.github.io/cp-helm-charts/
 
 helm repo update
 
 helm install `
-cp-kafka-release `
+mykafka `
 --namespace kafka `
 --set cp-schema-registry.enabled=false `
 --set cp-kafka-rest.enabled=false `
 --set cp-kafka-connect.enabled=false `
 --set cp-ksql-server.enabled=false `
 --set cp-control-center.enabled=false `
+--set cp-kafka.persistence.enabled=false `
 confluent/cp-helm-charts
+
+```
+
+### Connection string for Confluent Kafka
+
+```
+
+cp-kafka-release-cp-zookeeper-0.cp-kafka-release-cp-zookeeper-headless:2181,cp-kafka-release-cp-zookeeper-1.cp-kafka-release-cp-zookeeper-headless:2181,
+cp-kafka-release-cp-zookeeper-2.cp-kafka-release-cp-zookeeper-headless:2181
 
 ```
 
@@ -142,6 +154,7 @@ $ kubectl -n kafka exec -it kafka-client bash
 root@kafka-client:/# kafka-topics --zookeeper cp-kafka-release-cp-zookeeper-headless:2181 --topic prices --create --partitions 5 --replication-factor 3 --if-not-exists
 Created topic "prices".
 
+kafka-topics --zookeeper mykafka-cp-zookeeper-headless:2181 --topic prices --create --partitions 5 --replication-factor 3 --if-not-exists
 ```
 
 ### Deploy the Producer application

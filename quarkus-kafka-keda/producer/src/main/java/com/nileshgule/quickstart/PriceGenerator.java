@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-
 public class PriceGenerator {
 
     @Outgoing("producer")
     public Flowable<String> produce() {
 
         System.out.println("Sending messages...");
-        return Flowable.interval(200, TimeUnit.MILLISECONDS).map(tick -> RandomStringUtils.randomAlphabetic(64));
-    }
 
+        return Flowable.interval(200, TimeUnit.MILLISECONDS)
+                .map(tick -> "sending new message " + RandomStringUtils.randomAlphabetic(64));
+    }
 
 }
